@@ -12,6 +12,10 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
+       
+      - name: Limpar  Docker
+        run: docker system prune -af
+
       - name: Build da imagem Docker
         run: docker build -t nginx-devops-projeto .
 
