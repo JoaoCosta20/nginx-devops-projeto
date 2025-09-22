@@ -22,20 +22,3 @@ jobs:
         run: |
           docker tag nginx-devops-projeto ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
-
-      - name: Configurar kubectl
-        shell: powershell
-        run: |
-            # Cria o diretório se não existir
-            if (-Not (Test-Path -Path "$HOME\.kube")) {
-                New-Item -ItemType Directory -Path "$HOME\.kube" | Out-Null
-            }
-
-            # Escreve o kubeconfig
-             Set-Content -Path "$HOME\.kube\config" -Value "${{ secrets.KUBECONFIG_CONTENT }}" -Encoding ascii
-
-      - name: Deploy no Kubernetes
-        run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
-          kubectl apply -f k8s/servicemonitor.yaml
