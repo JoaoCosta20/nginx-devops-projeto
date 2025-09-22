@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-servicemonitor
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: nginx-devops
+  namespaceSelector:
+    matchNames:
+    - default   # porque o Nginx está no namespace default
+  endpoints:
+  - port: web
+    interval: 15s

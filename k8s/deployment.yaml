@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-devops
+  labels:
+    app: nginx-devops
+spec:
+  replicas: 2   # número de réplicas para alta disponibilidade
+  selector:
+    matchLabels:
+      app: nginx-devops
+  template:
+    metadata:
+      labels:
+        app: nginx-devops
+    spec:
+      containers:
+      - name: nginx
+        image: jrcosta2000/nginx-devops-projeto:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
