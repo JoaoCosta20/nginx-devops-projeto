@@ -22,3 +22,11 @@ jobs:
         run: |
           docker tag nginx-devops-projeto ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
+          - name: Configurar kubectl
+
+
+      - name: Deploy no Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/servicemonitor.yaml
