@@ -24,7 +24,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
 
       - name: Configurar kubectl
-        shell: pwsh
+        shell: powershell
         run: |
             # Cria o diretório se não existir
             if (-Not (Test-Path -Path "$HOME\.kube")) {
