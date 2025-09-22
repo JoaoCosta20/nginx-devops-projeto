@@ -13,10 +13,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Limpeza Docker antes do build
+        shell: powershell
         run: |
-           docker rm -f $(docker ps -aq) 2>$null || true
-           docker system prune -af --volumes
-       
+          $containers = docker ps -aq
+          if ($containers) {
+            docker rm -f $containers
+          }
+          docker system prune -af --volumes
+
       - name: Limpar  Docker
         run: docker system prune -af
 
