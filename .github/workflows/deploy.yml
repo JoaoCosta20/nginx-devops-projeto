@@ -24,9 +24,15 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/nginx-devops-projeto:latest
 
       - name: Configurar kubectl
+        shell: pwsh
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_CONTENT }}" > $HOME/.kube/config
+            # Cria o diretório se não existir
+            if (-Not (Test-Path -Path "$HOME\.kube")) {
+                New-Item -ItemType Directory -Path "$HOME\.kube" | Out-Null
+            }
+
+            # Escreve o kubeconfig
+             Set-Content -Path "$HOME\.kube\config" -Value "${{ secrets.KUBECONFIG_CONTENT }}" -Encoding ascii
 
       - name: Deploy no Kubernetes
         run: |
