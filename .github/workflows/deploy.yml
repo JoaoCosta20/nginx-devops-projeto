@@ -12,6 +12,10 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v3
 
+      - name: Limpeza Docker antes do build
+        run: |
+           docker rm -f $(docker ps -aq) 2>$null || true
+           docker system prune -af --volumes
        
       - name: Limpar  Docker
         run: docker system prune -af
