@@ -2,6 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-devops-service
+
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9091"
+    prometheus.io/path: "/metrics"
+    
 spec:
   selector:
     app: nginx-devops
@@ -9,5 +15,5 @@ spec:
   - protocol: TCP
     port: 80        # porta interna do Service
     targetPort: 80  # porta do container
-    name: web   # 🔑 Prometheus usa isto
+    name: web   # Prometheus usa isto
   type: NodePort    # podes usar LoadBalancer se tiveres cloud (AWS, GCP, Azure)
